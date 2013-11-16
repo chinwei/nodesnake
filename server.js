@@ -39,10 +39,10 @@ io.sockets.on('connection', function (socket) {
   }
   snakesArray.push(snakeProp);
 
-  setTimeout(function(){
-    io.sockets.emit('create_snake', snakesArray);
-  },1000)
-
+  // setTimeout(function(){
+    
+  // },1000)
+  io.sockets.emit('create_snake', snakesArray);
   socket.emit('client_connected', socket.id);
   
   

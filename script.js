@@ -25,7 +25,7 @@ snake = [],
 snakesPos = [],
 posX = 0,
 posY = 0;
-var socket = io.connect('http://chins-air.westell.com:8888');
+var socket = io.connect('http://128.237.134.196:8888');
 $(document).ready(function(){
 var paper = Raphael(0, 0, cw, ch);
 var background = paper.rect(0,0,cw,ch);
@@ -72,42 +72,11 @@ socket.on('remove_snake', function(data) {
 
 socket.on('move_snake', function(data) {
   
-  console.log('moving snake');
-
-  switch (data.keystroke) {
-    case 37: data.dir = 'left'; break;
-    case 39: data.dir = 'right'; break;
-    case 38: data.dir = 'up'; break;
-    case 40: data.dir = 'down'; break;
-  }
-
+  snake_move(data);
 
   
-  
-  
-  function get_next_coords( dir ) {
-    if( data.dir == "up" ) return { x:0, y:-snake_step };
-    if( data.dir == "down" ) return { x:0, y:snake_step };
-    if( data.dir == "left" ) return { x:-snake_step, y:0 };
-    if( data.dir == "right" ) return { x:snake_step, y:0 };
-  }
 
-  // console.log(get_next_coords(data.dir));
-  
-
-
-  posX = parseInt($('.'+data.id).eq(0).attr('cx'));
-  posY = parseInt($('.'+data.id).eq(0).attr('cy'));
-  // console.log(posX);
-  // posX = $('#'+data).attr('y');
-  posX += get_next_coords(data.dir).x;
-  posY += get_next_coords(data.dir).y;
-  // posY += snake_step;
-  $('.'+data.id).eq(0).attr('cx', posX);
-  $('.'+data.id).eq(0).attr('cy', posY);
-  // $('#'+data).attr('y', posY);
-  // console.log($('.'+data.id).eq(0));
-// TweenLite.to($('#'+data), 2, {raphael:{x:100, y:100}});
+ 
 
 
   
@@ -154,12 +123,51 @@ function snake_init(data) {
 
 
 
-function snake_move() {
-  // console.log(snake);
+function snake_move(data) {
+
+  console.log('snake is moving');
+
+  switch (data.keystroke) {
+    case 37: data.dir = 'left'; break;
+    case 39: data.dir = 'right'; break;
+    case 38: data.dir = 'up'; break;
+    case 40: data.dir = 'down'; break;
+  }
+
+  function get_next_coords( dir ) {
+    if( data.dir == "up" ) return { x:0, y:-snake_step };
+    if( data.dir == "down" ) return { x:0, y:snake_step };
+    if( data.dir == "left" ) return { x:-snake_step, y:0 };
+    if( data.dir == "right" ) return { x:snake_step, y:0 };
+  }
+
+  var $head = $('.'+data.id).eq(0);
+   posX = parseInt($head.attr('cx'));
+  posY = parseInt($head.attr('cy'));
+
+  posX += get_next_coords(data.dir).x;
+  posY += get_next_coords(data.dir).y;
+
+  $head.attr('cx', posX);
+  $head.attr('cy', posY);
+
+  // console.log(get_next_coords(data.dir).x);
+
+  // console.log($('.'+data.id).eq(0).attr('cx'));
+
+  // console.log($('.'+data.id).eq(0));
+
+  for (var i = snake.length - 1; i > 0; i--) {
+      $('.'+data.id).eq(i).attr('cx', $('.'+data.id).eq(i-1).attr('cx'));
+      $('.'+data.id).eq(i).attr('cy', $('.'+data.id).eq(i-1).attr('cy'));
+  };
+
+
+  // console.log(tx);
     // console.log( "Dir = " + direc );
     // for( i=snake.length-1; i>0; i-- ) {
-    //   var tx = snake[i-1].pos.x - snake[i].pos.x;
-    //   var ty = snake[i-1].pos.y - snake[i].pos.y;
+      // var tx = snake[i-1].pos.x - snake[i].pos.x;
+      // var ty = snake[i-1].pos.y - snake[i].pos.y;
     //   snake[i].pos.x = snake[i-1].pos.x;
     //   snake[i].pos.y = snake[i-1].pos.y;
     //   snake[i].node.translate( tx, ty );
@@ -181,7 +189,7 @@ function snake_move() {
   }
 
 
-// snake_loop()
+snake_loop()
 
 
 

@@ -24,7 +24,7 @@
 // snakesPos = [],
 // posX = 0,
 // posY = 0;
-var socket = io.connect('http://chins-air.westell.com:8888');
+var socket = io.connect('http://128.237.134.196:8888');
 var snakeId;
 
 
