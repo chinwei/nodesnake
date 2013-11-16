@@ -16,70 +16,82 @@
 
 
 
-var cw = $(window).width(),
-ch = $(window).height(),
-canvasWidth = 600,
-canvasHeight = 400,
-snakes = [],
-snakesPos = [],
-posX = 0,
-posY = 0;
+// var cw = $(window).width(),
+// ch = $(window).height(),
+// canvasWidth = 600,
+// canvasHeight = 400,
+// snakes = [],
+// snakesPos = [],
+// posX = 0,
+// posY = 0;
 var socket = io.connect('http://chins-air.westell.com:8888');
-$(document).ready(function(){
-var paper = Raphael(0, 0, cw, ch);
-var background = paper.rect(0,0,cw,ch);
+var snakeId;
 
 
 
 
-socket.on('create_snake', function(data) {
+
+
+
+socket.on('client_connected', function(data) {
   
   
-  for (var i = data.length - 1; i >= 0; i--) {
-    var snakeProp = {
-      id: data[i].id,
-      posX: data[i].x,
-      posY: data[i].y,
-      fill: 'red',
-      hue: random(1, 359)/360
-    };
+  // console.log(data);
+  window.addEventListener('keydown', function(e){
     
-    var snake = paper.rect(snakeProp.posX,snakeProp.posY,20,20);
+    snakeProp = {
+      id = data,
+      keystroke = e.keyCode;
+    };
 
-    snake.attr("fill", 'hsl('+snakeProp.hue+',0.3,0.7)');
+    socket.emit('handleKeyDown', snakeProp);
 
-    snake.node.id = snakeProp.id;
-  };
-  console.log($('#'+data[0].id)[0]);
+})
+
+})
+// $(document).ready(function(){
+// var paper = Raphael(0, 0, cw, ch);
+// var background = paper.rect(0,0,cw,ch);
+
+
+
+
+// socket.on('create_snake', function(data) {
+  
+  
+//   for (var i = data.length - 1; i >= 0; i--) {
+//     var snakeProp = {
+//       id: data[i].id,
+//       posX: data[i].x,
+//       posY: data[i].y,
+//       fill: 'red'
+//     };
+    
+//     var snake = paper.rect(snakeProp.posX,snakeProp.posY,20,20);
+//     snake.attr("fill", snakeProp.fill);
+//     snake.node.id = snakeProp.id;
+//   };
+//   console.log(data);
 
 
 
  
-})
+// })
 
-socket.on('remove_snake', function(data) {
+// socket.on('remove_snake', function(data) {
   
-  console.log(data);
-  
-  // console.log($('#'+data)[0]);
-  // $('#'+data).remove();
-  // for (var i = data.length - 1; i >= 0; i--) {
-  // }; 
-})
-
-socket.on('move_snake', function(data) {
-  
+//   console.log($('#'+data)[0]);
+//   $('#'+data).remove();
+//   for (var i = data.length - 1; i >= 0; i--) {
+   
+ 
+//   };
   
 
-  posX = $('#'+data).attr('x');
-  posX++;
-  $('#'+data).attr('x', posX);
-// TweenLite.to($('#'+data), 2, {raphael:{x:100, y:100}});
-// smallCircle.data('id',data).attr({opacity:0.5});
 
-  
-  
-})
+
+ 
+// })
 
 // socket.on('client_connected', function(data) {
   
@@ -107,12 +119,12 @@ socket.on('move_snake', function(data) {
 
 
 
-for (var i = snakes.length - 1; i >= 0; i--) {
-  snakes[i].attr("fill", "#f00");
-  snakes[i].attr("stroke", "#fff");
-};
+// for (var i = snakes.length - 1; i >= 0; i--) {
+//   snakes[i].attr("fill", "#f00");
+//   snakes[i].attr("stroke", "#fff");
+// };
 
-})
+// })
 
 
 
