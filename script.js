@@ -72,7 +72,7 @@ socket.on('remove_snake', function(data) {
 
 socket.on('move_snake', function(data) {
   
-  // var dir;
+  console.log('moving snake');
 
   switch (data.keystroke) {
     case 37: data.dir = 'left'; break;
@@ -96,16 +96,17 @@ socket.on('move_snake', function(data) {
   
 
 
-  posX = parseInt($('#'+data.id).attr('x'));
-  posY = parseInt($('#'+data.id).attr('y'));
-  // console.log(typeof posX);
+  posX = parseInt($('.'+data.id).eq(0).attr('cx'));
+  posY = parseInt($('.'+data.id).eq(0).attr('cy'));
+  // console.log(posX);
   // posX = $('#'+data).attr('y');
   posX += get_next_coords(data.dir).x;
   posY += get_next_coords(data.dir).y;
   // posY += snake_step;
-  $('#'+data.id).attr('x', posX);
-  $('#'+data.id).attr('y', posY);
+  $('.'+data.id).eq(0).attr('cx', posX);
+  $('.'+data.id).eq(0).attr('cy', posY);
   // $('#'+data).attr('y', posY);
+  // console.log($('.'+data.id).eq(0));
 // TweenLite.to($('#'+data), 2, {raphael:{x:100, y:100}});
 
 
