@@ -40,8 +40,9 @@ socket.on('client_connected', function(data) {
   window.addEventListener('keydown', function(e){
     
     snakeProp = {
-      id = data,
-      keystroke = e.keyCode;
+      id: data,
+      keystroke: e.keyCode,
+      dir: ''
     };
 
     socket.emit('handleKeyDown', snakeProp);
