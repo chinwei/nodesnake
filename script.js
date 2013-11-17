@@ -25,7 +25,7 @@ snake = [],
 snakesPos = [],
 posX = 0,
 posY = 0;
-var socket = io.connect('http://128.237.134.196:8888');
+var socket = io.connect('http://chins-air.westell.com:8888');
 $(document).ready(function(){
 var paper = Raphael(0, 0, cw, ch);
 var background = paper.rect(0,0,cw,ch);
@@ -71,7 +71,7 @@ socket.on('remove_snake', function(data) {
 })
 
 socket.on('move_snake', function(data) {
-  
+  snake_loop();
   snake_move(data);
 
   
@@ -125,7 +125,7 @@ function snake_init(data) {
 
 function snake_move(data) {
 
-  console.log('snake is moving');
+  // console.log('snake is moving');
 
   switch (data.keystroke) {
     case 37: data.dir = 'left'; break;
@@ -151,7 +151,7 @@ function snake_move(data) {
   $head.attr('cx', posX);
   $head.attr('cy', posY);
 
-  // console.log(get_next_coords(data.dir).x);
+  console.log(get_next_coords(data.dir).x);
 
   // console.log($('.'+data.id).eq(0).attr('cx'));
 
@@ -189,7 +189,7 @@ function snake_move(data) {
   }
 
 
-snake_loop()
+
 
 
 
